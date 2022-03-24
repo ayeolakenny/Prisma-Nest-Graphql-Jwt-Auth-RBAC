@@ -1,0 +1,53 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: ID!
+  email: String!
+  username: String!
+  role: ROLE!
+  mobileNumber: String!
+  confirmed: Boolean!
+  password: String!
+}
+
+enum ROLE {
+  USER
+  ADMIN
+}
+
+type AuthResponse {
+  id: ID!
+  email: String!
+  username: String!
+  role: ROLE!
+  mobileNumber: String!
+  confirmed: Boolean!
+  password: String!
+  token: String!
+}
+
+type Query {
+  findFromUser(input: String!): User!
+  findFromAdmin(input: String!): User!
+}
+
+type Mutation {
+  createUser(input: UserCreateInput!): User!
+  login(input: LoginInput!): AuthResponse!
+}
+
+input UserCreateInput {
+  email: String!
+  username: String!
+  role: ROLE
+  mobileNumber: String!
+  confirmed: Boolean
+  password: String!
+}
+
+input LoginInput {
+  password: String!
+  username: String!
+}

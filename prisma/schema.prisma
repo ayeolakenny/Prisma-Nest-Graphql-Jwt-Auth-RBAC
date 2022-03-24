@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator nestgraphql {
+  provider               = "node node_modules/prisma-nestjs-graphql"
+  output                 = "../src/@generated/prisma-nestjs-graphql"
+  fields_Validator_from  = "class-validator"
+  fields_Validator_input = true
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int     @id @default(autoincrement())
+  /// @Validator.IsEmail()
+  /// @Validator.IsNotEmpty()
+  email        String  @unique
+  /// @Validator.MinLength(2)
+  /// @Validator.IsString()
+  /// @Validator.IsNotEmpty()
+  username     String  @unique
+  // @Validator.IsEnum(ROLE, { each: true })
+  /// @Validator.IsOptional()
+  role         ROLE    @default(USER)
+  /// @Validator.IsNotEmpty()
+  ///@Validator.IsPhoneNumber()
+  mobileNumber String  @unique
+  /// @Validaror.IsBoolean()
+  /// @Validation.IsOptional()
+  confirmed    Boolean @default(false)
+  /// @Validator.IsString()
+  /// @Validator.IsNotEmpty()
+  /// @Validation.HideField({output: true})
+  password     String  @unique
+}
+
+enum ROLE {
+  USER
+  ADMIN
+}
